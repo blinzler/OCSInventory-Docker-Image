@@ -1,12 +1,7 @@
 ![Logo-OCS](http://cdn.ocsinventory-ng.org/common/banners/banner300px.png)
 
 ## Some Links
-  - [ASK question](https://ask.ocsinventory-ng.org)
-  - [Website](https://www.ocsinventory-ng.org/?utm_source=github-ocs)
-  - [Github](https://github.com/OCSInventory-NG)
-  - [OCS Professional](https://www.ocsinventory-ng.org/en/#ocs-pro-en)
-
-
+  - [Github](https://github.com/blinzler)
 
 OCS (Open Computers and Software Inventory Next Generation) is an assets management and deployment solution.
 Since 2001, OCS Inventory NG has been looking for making software and hardware more powerful.
@@ -35,7 +30,7 @@ OCS Inventory NG includes the packet deployment functionality to be sure that al
 Starting a **OCSInventory container** is simple:
 Clone this repository :
 
-> sudo git clone https://github.com/OCSInventory-NG/OCSInventory-Docker-Image.git
+> sudo git clone https://github.com/blinzler/OCSInventory-Docker-Image.git
 > cd OCSInventory-Docker-Image
 
 
