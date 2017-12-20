@@ -101,6 +101,9 @@ RUN chmod +x /root/run.sh ;\
     rm -rf /var/lib/apt/lists/* ;\
     rm -rf /var/cache/apt/archives/* ;
 
+# forward logs to docker log collector
+RUN ln -sf /dev/stdout /var/log/ocsinventory-server
+
 EXPOSE 80
 EXPOSE 443
 
