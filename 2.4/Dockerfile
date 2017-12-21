@@ -46,9 +46,9 @@ RUN apt-get update ; \
     /usr/sbin/a2dissite 000-default ;\
     /usr/sbin/a2enmod rewrite ;\
     /usr/sbin/a2enmod ssl ;\
-    /usr/sbin/a2enmod authz_user ;\
-    wget https://raw.githubusercontent.com/OCSInventory-NG/OCSInventory-Server/master/binutils/docker-download.sh ;\
-    sh docker-download.sh 2.4
+    /usr/sbin/a2enmod authz_user
+COPY ./scripts/docker-download.sh /tmp/docker-download.sh
+RUN sh /tmp/docker-download.sh 2.4
 
 WORKDIR /tmp/ocs/Apache
 RUN perl Makefile.PL ;\
@@ -94,6 +94,7 @@ RUN chmod +x /root/run.sh ;\
     ln -s /etc/apache2/conf-available/ocsinventory-reports.conf /etc/apache2/conf-enabled/ocsinventory-reports.conf ;\
     ln -s /etc/apache2/conf-available/z-ocsinventory-server.conf /etc/apache2/conf-enabled/z-ocsinventory-server.conf ;\
     rm /usr/share/ocsinventory-reports/ocsreports/install.php ;\
+    rm /tmp/docker-download.sh ;\
     rm -rf /tmp/ocs ;\
     apt-get clean ;\
     apt-get autoclean ;\
