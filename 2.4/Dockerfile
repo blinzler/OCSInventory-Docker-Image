@@ -72,9 +72,8 @@ RUN cp -R ocsreports/* /usr/share/ocsinventory-reports/ocsreports ;\
     mkdir -p /var/log/ocsinventory-server/ ;\
     chmod +w /var/log/ocsinventory-server ;\
     chown -R apache: /usr/share/ocsinventory-reports/
-    rm -f /etc/httpd/conf.d/welcome.conf
 
-COPY /conf/ocsinventory-reports.conf /conf/z-ocsinventory-server.conf /conf/welcome.conf /etc/httpd/conf.d/
+COPY /conf/ocsinventory-reports.conf /conf/z-ocsinventory-server.conf /etc/httpd/conf.d/
 COPY ./scripts/run.sh /root/run.sh
 
 # forward logs to docker log collector
