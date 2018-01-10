@@ -73,6 +73,8 @@ ENV APACHE_LOG_DIR      /var/log/apache2
 
 WORKDIR /tmp/ocs
 
+RUN rm -f /usr/share/ocsinventory-reports/ocsreports/dbconfig.inc.php
+
 COPY dbconfig.inc.php /usr/share/ocsinventory-reports/ocsreports/
 
 RUN cp -R ocsreports/* /usr/share/ocsinventory-reports/ocsreports ;\
