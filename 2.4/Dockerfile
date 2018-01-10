@@ -62,23 +62,26 @@ RUN perl Makefile.PL ;\
     mkdir -p /etc/ocsinventory-server/perl ;\
     mkdir -p /usr/share/ocsinventory-reports/ocsreports
 
-ENV APACHE_RUN_USER     www-data
-ENV APACHE_RUN_GROUP    www-data
-ENV APACHE_LOG_DIR      /var/log/apache2
-ENV APACHE_PID_FILE     /var/run/apache2.pid
-ENV APACHE_RUN_DIR      /var/run/apache2f
-ENV APACHE_LOCK_DIR     /var/lock/apache2
-ENV APACHE_LOG_DIR      /var/log/apache2
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
+ENV APACHE_PID_FILE /var/run/apache2.pid
+ENV APACHE_RUN_DIR /var/run/apache2f
+ENV APACHE_LOCK_DIR /var/lock/apache2
+ENV APACHE_LOG_DIR /var/log/apache2
+
+ENV OCS_DBNAME ocsweb
+ENV OCS_DBSERVER_READ localhost
+ENV OCS_DBSERVER_WRITE localhost
+ENV OCS_DBUSER ocs
+ENV OCS_DBPASS ocs
 
 
 WORKDIR /tmp/ocs
 
-RUN rm -f /usr/share/ocsinventory-reports/ocsreports/dbconfig.inc.php
-
-COPY dbconfig.inc.php /usr/share/ocsinventory-reports/ocsreports/
-
-RUN cp -R ocsreports/* /usr/share/ocsinventory-reports/ocsreports ;\
-    bash -c 'mkdir -p /var/lib/ocsinventory-reports/{download,ipd,logs,scripts,snmp}' ;\
+RUN cp -R ocsreports/* /usr/share/ocsinventory-reports/ocsreports
+COPY dbconfig.inc.php /usr/share/ocsinventory-reports/ocsreports/dbconfig.inc.php
+RUN bash -c 'mkdir -p /var/lib/ocsinventory-reports/{download,ipd,logs,scripts,snmp}' ;\
     chmod -R +w /var/lib/ocsinventory-reports ;\
     chown www-data: -R /var/lib/ocsinventory-reports ;\
     cp binutils/ipdiscover-util.pl /usr/share/ocsinventory-reports/ocsreports/ipdiscover-util.pl ;\
