@@ -45,7 +45,7 @@ Clone this repository :
 > -e OCS_DBUSER=ocs \
 > -e OCS_DBPASS=ocs \
 > -itd \
-> ocsinventory/ocsinventory-docker-image:latest \
+> blinzlerone/ocsinventory-docker-image:latest \
 > bash
 
 ----------
@@ -62,6 +62,7 @@ Follow the steps, the script will do the work for you
 
 Use the following environmental variables to connect your MySQL Server.
 
+> TIMEZONE= *(your timezone <Europe/Berlin> is default)*
 > OCS_DBNAME= *(Name of your database)*
 > OCS_DBSERVER_READ= *(Database Server)*
 > OCS_DBSERVER_WRITE=*(Database Server)*
@@ -72,7 +73,7 @@ Use the following environmental variables to connect your MySQL Server.
 
 ### Using Docker container
 
-If you want to run your OCSInventory within a MYSQL docker container, simply start your database server before starting your OCSInventory container. More information here for MYSQL container or use our **[Stack OCSInventory](https://github.com/OCSInventory-NG/OCSInventory-Docker-Stack.git)**.
+If you want to run your OCSInventory within a MYSQL docker container, simply start your database server before starting your OCSInventory container. More information here for MYSQL container or use our **[Stack OCSInventory](https://github.com/blinzler/OCSInventory-Docker-Stack.git)**.
 
 ----------
 
@@ -102,6 +103,7 @@ Start your OCSInventory container like this:
 > -p 80:80 \
 > --name myocsinventory \
 > -v /my/own/datadir:/data/save/ocsinventory \
+> -e TIMEZONE=Europe/Berlin \
 > -e OCS_DBNAME=ocsweb \
 > -e OCS_DBSERVER_READ=localhost \
 > -e OCS_DBSERVER_WRITE=localhost \
