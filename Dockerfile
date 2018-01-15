@@ -1,6 +1,6 @@
 FROM debian:jessie-slim
 
-LABEL maintainer="contact@ocsinventory-ng.org"
+LABEL maintainer="Martin Brandt m.brandt@globits.de"
 LABEL version="2.4"
 LABEL description="OCS (Open Computers and Software Inventory Next Generation)"
 
