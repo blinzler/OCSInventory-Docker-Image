@@ -62,7 +62,7 @@ Follow the steps, the script will do the work for you
 
 Use the following environmental variables to connect your MySQL Server.
 
-> TIMEZONE= *(your timezone <Europe/Berlin> is default)*
+> TIMEZONE= *(your timezone "Europe/Berlin" is default)*
 > OCS_DBNAME= *(Name of your database)*
 > OCS_DBSERVER_READ= *(Database Server)*
 > OCS_DBSERVER_WRITE=*(Database Server)*
