@@ -46,9 +46,9 @@ RUN apt-get update ; \
     /usr/sbin/a2dissite 000-default ;\
     /usr/sbin/a2enmod rewrite ;\
     /usr/sbin/a2enmod ssl ;\
-    /usr/sbin/a2enmod authz_user ;\
-    wget https://raw.githubusercontent.com/OCSInventory-NG/OCSInventory-Server/master/binutils/docker-download.sh ;\
-    sh docker-download.sh 2.4
+    /usr/sbin/a2enmod authz_user
+COPY ./scripts/docker-download.sh /tmp/docker-download.sh
+RUN sh /tmp/docker-download.sh 2.4
 
 WORKDIR /tmp/ocs/Apache
 RUN perl Makefile.PL ;\
@@ -62,21 +62,25 @@ RUN perl Makefile.PL ;\
     mkdir -p /etc/ocsinventory-server/perl ;\
     mkdir -p /usr/share/ocsinventory-reports/ocsreports
 
-ENV APACHE_RUN_USER     www-data
-ENV APACHE_RUN_GROUP    www-data
-ENV APACHE_LOG_DIR      /var/log/apache2
-ENV APACHE_PID_FILE     /var/run/apache2.pid
-ENV APACHE_RUN_DIR      /var/run/apache2f
-ENV APACHE_LOCK_DIR     /var/lock/apache2
-ENV APACHE_LOG_DIR      /var/log/apache2
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
+ENV APACHE_PID_FILE /var/run/apache2.pid
+ENV APACHE_RUN_DIR /var/run/apache2f
+ENV APACHE_LOCK_DIR /var/lock/apache2
+ENV APACHE_LOG_DIR /var/log/apache2
+ENV OCS_DBNAME ocsweb
+ENV OCS_DBSERVER_READ localhost
+ENV OCS_DBSERVER_WRITE localhost
+ENV OCS_DBUSER ocs
+ENV OCS_DBPASS ocs
 
 
 WORKDIR /tmp/ocs
 
-COPY dbconfig.inc.php /usr/share/ocsinventory-reports/ocsreports/
-
-RUN cp -R ocsreports/* /usr/share/ocsinventory-reports/ocsreports ;\
-    bash -c 'mkdir -p /var/lib/ocsinventory-reports/{download,ipd,logs,scripts,snmp}' ;\
+RUN cp -R ocsreports/* /usr/share/ocsinventory-reports/ocsreports
+COPY dbconfig.inc.php /usr/share/ocsinventory-reports/ocsreports/dbconfig.inc.php
+RUN bash -c 'mkdir -p /var/lib/ocsinventory-reports/{download,ipd,logs,scripts,snmp}' ;\
     chmod -R +w /var/lib/ocsinventory-reports ;\
     chown www-data: -R /var/lib/ocsinventory-reports ;\
     cp binutils/ipdiscover-util.pl /usr/share/ocsinventory-reports/ocsreports/ipdiscover-util.pl ;\
@@ -94,12 +98,16 @@ RUN chmod +x /root/run.sh ;\
     ln -s /etc/apache2/conf-available/ocsinventory-reports.conf /etc/apache2/conf-enabled/ocsinventory-reports.conf ;\
     ln -s /etc/apache2/conf-available/z-ocsinventory-server.conf /etc/apache2/conf-enabled/z-ocsinventory-server.conf ;\
     rm /usr/share/ocsinventory-reports/ocsreports/install.php ;\
+    rm /tmp/docker-download.sh ;\
     rm -rf /tmp/ocs ;\
     apt-get clean ;\
     apt-get autoclean ;\
     apt-get autoremove ;\
     rm -rf /var/lib/apt/lists/* ;\
     rm -rf /var/cache/apt/archives/* ;
+
+# forward logs to docker log collector
+RUN ln -sf /dev/stdout /var/log/ocsinventory-server
 
 EXPOSE 80
 EXPOSE 443
