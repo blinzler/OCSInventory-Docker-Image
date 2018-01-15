@@ -54,7 +54,7 @@ WORKDIR /tmp/ocs/Apache
 RUN perl Makefile.PL ;\
     make ;\
     make install ;\
-    cp /usr/share/zoneinfo/Europe/Paris /etc/localtime ;\
+    cp /usr/share/zoneinfo/{&TIMEZONE} /etc/localtime ;\
     cp -R blib/lib/Apache /usr/local/share/perl/5.20.2/ ;\
     cp -R Ocsinventory /usr/local/share/perl/5.20.2/ ;\
     cp /tmp/ocs/etc/logrotate.d/ocsinventory-server /etc/logrotate.d/ ;\
@@ -62,6 +62,7 @@ RUN perl Makefile.PL ;\
     mkdir -p /etc/ocsinventory-server/perl ;\
     mkdir -p /usr/share/ocsinventory-reports/ocsreports
 
+ENV TIMEZONE Europe/Berlin
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
 ENV APACHE_LOG_DIR /var/log/apache2
