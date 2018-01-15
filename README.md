@@ -52,7 +52,9 @@ Open your webbrowser **http://CONTAINERHOST/ocsreports/**
 Login:
 User: admin
 Password: admin
+
 ----------
+
 ### Use setup.sh to start you OCSInventory container
 
 Enter the directory you just clone, and run the setup.sh script
