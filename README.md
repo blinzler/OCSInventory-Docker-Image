@@ -48,10 +48,10 @@ Clone this repository :
 > blinzlerone/ocsinventory-docker-image:latest \
 > bash
 
-Open your webbrowser http://CONTAINERHOST/ocsreports
+Open your webbrowser **http://CONTAINERHOST/ocsreports/**
 Login:
-User      -> admin
-Password  -> admin
+User: admin
+Password: admin
 ----------
 ### Use setup.sh to start you OCSInventory container
 
