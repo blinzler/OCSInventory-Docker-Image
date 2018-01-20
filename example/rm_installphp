@@ -1,0 +1,2 @@
+docker exec ocs /bin/rm /usr/share/ocsinventory-reports/ocsreports/install.php
+

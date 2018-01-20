@@ -1,0 +1,16 @@
+docker run \
+  -itd \
+  --name=ocs \
+  --publish=10.10.10.4:10080:80 \
+  --publish=10.10.10.4:10443:443 \
+  --restart=always \
+  --env="OCS_DBNAME=ocs" \
+  --env="OCS_DBSERVER_READ=10.10.10.4" \
+  --env="OCS_DBSERVER_WRITE=10.10.10.4" \
+  --env="OCS_DBUSER=ocs" \
+  --env="OCS_DBPASS=ocs" \
+  --memory=2G \
+  blinzlerone/ocsinventory-docker-image:latest
+
+docker logs -f ocs
+
