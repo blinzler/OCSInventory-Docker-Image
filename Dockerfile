@@ -5,6 +5,7 @@ LABEL version="2.4"
 LABEL description="OCS (Open Computers and Software Inventory Next Generation)"
 
 ARG APT_FLAGS="-y --no-install-recommends"
+ARG TIMEZONE="Europe/Berlin"
 
 VOLUME /var/lib/mysql
 
@@ -54,7 +55,7 @@ WORKDIR /tmp/ocs/Apache
 RUN perl Makefile.PL ;\
     make ;\
     make install ;\
-    cp /usr/share/zoneinfo/{&TIMEZONE} /etc/localtime ;\
+    cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime ;\
     cp -R blib/lib/Apache /usr/local/share/perl/5.20.2/ ;\
     cp -R Ocsinventory /usr/local/share/perl/5.20.2/ ;\
     cp /tmp/ocs/etc/logrotate.d/ocsinventory-server /etc/logrotate.d/ ;\
@@ -62,19 +63,19 @@ RUN perl Makefile.PL ;\
     mkdir -p /etc/ocsinventory-server/perl ;\
     mkdir -p /usr/share/ocsinventory-reports/ocsreports
 
-ENV TIMEZONE Europe/Berlin
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log/apache2
-ENV APACHE_PID_FILE /var/run/apache2.pid
-ENV APACHE_RUN_DIR /var/run/apache2f
-ENV APACHE_LOCK_DIR /var/lock/apache2
-ENV APACHE_LOG_DIR /var/log/apache2
-ENV OCS_DBNAME ocsweb
-ENV OCS_DBSERVER_READ localhost
-ENV OCS_DBSERVER_WRITE localhost
-ENV OCS_DBUSER ocs
-ENV OCS_DBPASS ocs
+ENV TIMEZONE=${TIMEZONE}
+ENV APACHE_RUN_USER=www-data
+ENV APACHE_RUN_GROUP=www-data
+ENV APACHE_LOG_DIR=/var/log/apache2
+ENV APACHE_PID_FILE=/var/run/apache2.pid
+ENV APACHE_RUN_DIR=/var/run/apache2f
+ENV APACHE_LOCK_DIR=/var/lock/apache2
+ENV APACHE_LOG_DIR=/var/log/apache2
+ENV OCS_DBNAME=ocsweb
+ENV OCS_DBSERVER_READ=localhost
+ENV OCS_DBSERVER_WRITE=localhost
+ENV OCS_DBUSER=ocs
+ENV OCS_DBPASS=ocs
 
 
 WORKDIR /tmp/ocs
@@ -98,8 +99,8 @@ COPY ./scripts/run.sh /root/run.sh
 RUN chmod +x /root/run.sh ;\
     ln -s /etc/apache2/conf-available/ocsinventory-reports.conf /etc/apache2/conf-enabled/ocsinventory-reports.conf ;\
     ln -s /etc/apache2/conf-available/z-ocsinventory-server.conf /etc/apache2/conf-enabled/z-ocsinventory-server.conf ;\
-    rm /usr/share/ocsinventory-reports/ocsreports/install.php ;\
     rm /tmp/docker-download.sh ;\
+    rm /OCSNG*.gz ;\
     rm -rf /tmp/ocs ;\
     apt-get clean ;\
     apt-get autoclean ;\
