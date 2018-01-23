@@ -1,7 +1,7 @@
 ![Logo-OCS](http://cdn.ocsinventory-ng.org/common/banners/banner300px.png)
-
 ## Some Links
   - [Github](https://github.com/blinzler)
+  - [forked from OCSInventory-NG](https://github.com/OCSInventory-NG/OCSInventory-Docker-Image)
 
 OCS (Open Computers and Software Inventory Next Generation) is an assets management and deployment solution.
 Since 2001, OCS Inventory NG has been looking for making software and hardware more powerful.
@@ -27,6 +27,7 @@ OCS Inventory NG includes the packet deployment functionality to be sure that al
 ## Installation
 #### Start your OCSInventory container
 
+*You need MySQL/MariaDB*
 Starting a **OCSInventory container** is simple:
 Clone this repository :
 
@@ -36,17 +37,25 @@ Clone this repository :
 
 *The following command uses the **default values**.*
 
-> sudo docker run \
-> -p 80:80 \
-> --name myocsinventory \
-> -e OCS_DBNAME=ocsweb \
-> -e OCS_DBSERVER_READ=localhost \
-> -e OCS_DBSERVER_WRITE=localhost \
-> -e OCS_DBUSER=ocs \
-> -e OCS_DBPASS=ocs \
-> -itd \
-> blinzlerone/ocsinventory-docker-image:latest \
-> bash
+> docker run \
+>  -itd \
+>  --name=ocs \
+>  --publish=80:80 \
+>  --publish=443:443 \
+>  --restart=always \
+>  --env="TIMEZONE=Europe/Berlin" \
+>  --env="OCS_DBNAME=ocs" \
+>  --env="OCS_DBSERVER_READ=localhost" \
+>  --env="OCS_DBSERVER_WRITE=localhost" \
+>  --env="OCS_DBUSER=ocs" \
+>  --env="OCS_DBPASS=ocs" \
+>  blinzlerone/ocsinventory-docker-image:latest
+>
+>docker logs -f ocs
+
+*To remove the **install.php***
+
+>docker container exec ocs /bin/rm /usr/share/ocsinventory-reports/ocsreports/install.php
 
 Open your webbrowser **http://CONTAINERHOST/ocsreports/**
 Login:
@@ -87,11 +96,11 @@ If you want to run your OCSInventory within a MYSQL docker container, simply sta
 
 The docker exec command allows you to run commands inside a Docker container. The following command line will give you a bash shell inside your OCSInventory container:
 
-> sudo docker exec -it yourcontainerOCSInventory bash
+> sudo docker container exec -it yourcontainerOCSInventory bash
 
 You can access to the container logs through the following Docker command:
 
-> sudo docker logs yourcontainerOCSInventory
+> sudo docker container logs yourcontainerOCSInventory
 
 ----------
 
