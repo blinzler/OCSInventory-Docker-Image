@@ -1,7 +1,7 @@
 FROM debian:jessie-slim
 
 LABEL maintainer="Martin Brandt m.brandt@globits.de"
-LABEL version="2.4"
+LABEL version="2.4.1"
 LABEL description="OCS (Open Computers and Software Inventory Next Generation)"
 
 ARG APT_FLAGS="-y --no-install-recommends"
@@ -49,7 +49,7 @@ RUN apt-get update ; \
     /usr/sbin/a2enmod ssl ;\
     /usr/sbin/a2enmod authz_user
 COPY ./scripts/docker-download.sh /tmp/docker-download.sh
-RUN sh /tmp/docker-download.sh 2.4
+RUN sh /tmp/docker-download.sh 2.4.1
 
 WORKDIR /tmp/ocs/Apache
 RUN perl Makefile.PL ;\
